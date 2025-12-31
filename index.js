@@ -69,6 +69,30 @@ const connectAndSave = async () => {
                 });
             }
         });
+
+        // updating the data
+        app.put("/articles:id", async (req, res) => {
+            try {
+                const data = await Articles.findByIdAndUpdate(
+                    req.params.id,
+                    req.body,
+                    { new: true }
+                );
+
+                if (!data)
+                    return res
+                        .status(404)
+                        .json({ messege: "Article not found!" });
+                res.status(200).json({
+                    messege: "Article updated successfully!",
+                });
+            } catch (err) {
+                res.status(500).json({
+                    messege: "Error updating article",
+                    error: err,
+                });
+            }
+        });
         // initializing the server
         app.listen(PORT, () => {
             console.log(
