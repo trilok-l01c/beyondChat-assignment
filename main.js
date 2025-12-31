@@ -2,8 +2,6 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 const DBFile = require("./articles"); // importing the DB file
-// express app
-const app = express();
 
 // storing all the articles, only two for now
 let pages = [
@@ -42,7 +40,8 @@ const scraping = async () => {
     }
     // as per requirement only taking 5 articles
     const lastFiveArticles = articles.slice(0, 5);
-    console.log(lastFiveArticles);
+    return lastFiveArticles;
 };
 
-scraping();
+// exporting the scraping function
+module.exports = { scraping };
