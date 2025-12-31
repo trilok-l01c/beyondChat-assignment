@@ -1,7 +1,7 @@
 // using these two to get HTML and scraping data from it.
 const axios = require("axios");
 const cheerio = require("cheerio");
-const DBFile = require("./articles"); // importing the DB file
+const DBFile = require("../models/articles"); // importing the DB file
 
 // storing all the articles, only two for now
 let pages = [
