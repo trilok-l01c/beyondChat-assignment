@@ -2,6 +2,8 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 const DBFile = require("./articles"); // importing the DB file
+// express app
+const app = express();
 
 // storing all the articles, only two for now
 let pages = [
