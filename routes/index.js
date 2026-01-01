@@ -11,6 +11,8 @@ const { getResults } = require("../services/searchService");
 const MongoURI = process.env.MONGO_URI;
 // working with express
 const app = express();
+// middleware
+app.use(express.json());
 const PORT = process.env.PORT;
 // accessing the database
 const connectAndSave = async () => {
@@ -31,17 +33,11 @@ const connectAndSave = async () => {
             console.log(item.title);
         }
 
-        // working with express
-        app.get("/api/articles", async (req, res) => {
-            const allArticles = await Articles.find();
-            res.json(allArticles);
-        });
-
         // read logic
-        app.get("/articles", async (req, res) => {
+        app.get("/articles/", async (req, res) => {
             try {
                 // fetching from the MongoDB
-                const data = await Articles.find();
+                const data = await Articles.find({});
                 // showing success
                 res.status(200).json(data);
             } catch (err) {
@@ -54,7 +50,7 @@ const connectAndSave = async () => {
         });
 
         // deleting the article
-        app.delete("/articles:id", async (req, res) => {
+        app.delete("/articles/:id", async (req, res) => {
             try {
                 // fetching and deleting the article by unique Id created by mongoDB
                 const deleted = await Articles.findByIdAndDelete(req.params.id);
@@ -72,7 +68,7 @@ const connectAndSave = async () => {
         });
 
         // updating the data
-        app.put("/articles:id", async (req, res) => {
+        app.put("/articles/:id", async (req, res) => {
             try {
                 const data = await Articles.findByIdAndUpdate(
                     req.params.id,
@@ -112,7 +108,7 @@ const researchArticles = async () => {
     const article = await Articles.findOne({ processed: { $ne: true } });
     if (article) {
         console.log(`search for competitors for: ${article.title}`);
-        const competitors = getResult(article.title);
+        const competitors = getResults(article.title);
         console.log(`Found competitors ${competitors}`);
     }
 };
