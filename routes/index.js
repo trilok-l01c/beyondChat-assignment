@@ -19,6 +19,7 @@ const connectAndSave = async () => {
     try {
         // returns nothing
         await mongoose.connect(MongoURI);
+        // CREATE Logic: POST
         // saving the articles
         const articles = await scraping();
         for (const item of articles) {
@@ -32,8 +33,7 @@ const connectAndSave = async () => {
             );
             console.log(item.title);
         }
-
-        // read logic
+        // READ Logic: GET route
         app.get("/articles/", async (req, res) => {
             try {
                 // fetching from the MongoDB
@@ -49,6 +49,19 @@ const connectAndSave = async () => {
             }
         });
 
+        app.get("/articles/:id", async (req, res) => {
+            try {
+                const data = await Articles.findById(req.params.id);
+                if (!data)
+                    return res.status(404).json({ messege: "File not found!" });
+                res.status(200).json(data);
+            } catch (err) {
+                res.status(500).json({
+                    messege: "Error finding article",
+                    error: err,
+                });
+            }
+        });
         // deleting the article
         app.delete("/articles/:id", async (req, res) => {
             try {
