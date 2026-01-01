@@ -4,8 +4,9 @@ require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const express = require("express");
 const mongoose = require("mongoose");
 const Articles = require("../models/articles");
-const { scraping } = require("../services/main");
+const { scraping } = require("../services/baseScraper");
 const { getResults } = require("../services/searchService");
+const { runDeepResearch } = require("../services/main");
 
 // taking mongo's connection string
 const MongoURI = process.env.MONGO_URI;
@@ -110,6 +111,8 @@ const connectAndSave = async () => {
                     `http://localhost:${PORT}/articles`
             );
         });
+        // calling for the deep research
+        runDeepResearch();
     } catch (err) {
         console.error(err);
     }
