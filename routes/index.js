@@ -1,21 +1,22 @@
+// accessing the .env
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const express = require("express");
 const mongoose = require("mongoose");
 const Articles = require("../models/articles");
 const { scraping } = require("../services/main");
+const { getResults } = require("../services/searchService");
 
+// taking mongo's connection string
+const MongoURI = process.env.MONGO_URI;
 // working with express
 const app = express();
-const PORT = 2500;
+const PORT = process.env.PORT;
 // accessing the database
 const connectAndSave = async () => {
     try {
         // returns nothing
-        await mongoose.connect(
-            // password should be alphanumeric
-            "mongodb+srv://trilokl01c:glQwBajNsqOrZYUu@first.muygxfz.mongodb.net/beyond_chats?appName=first"
-            //                        ^^^^^^^^^^^^^^^^                           ^^^^^^^^^^^  ^^^^^^^^^^^^^^
-            //                         password                                Datebase name | cluster name
-        );
+        await mongoose.connect(MongoURI);
         // saving the articles
         const articles = await scraping();
         for (const item of articles) {
@@ -56,7 +57,7 @@ const connectAndSave = async () => {
         app.delete("/articles:id", async (req, res) => {
             try {
                 // fetching and deleting the article by unique Id created by mongoDB
-                const deleted = await Articles.findByIdAndDelete();
+                const deleted = await Articles.findByIdAndDelete(req.params.id);
                 if (!deleted)
                     return res
                         .status(404)
@@ -96,7 +97,8 @@ const connectAndSave = async () => {
         // initializing the server
         app.listen(PORT, () => {
             console.log(
-                "server is running on port: " + `http://localhost:${PORT}`
+                "server is running on port: " +
+                    `http://localhost:${PORT}/articles`
             );
         });
     } catch (err) {
@@ -105,3 +107,12 @@ const connectAndSave = async () => {
 };
 
 connectAndSave();
+
+const researchArticles = async () => {
+    const article = await Articles.findOne({ processed: { $ne: true } });
+    if (article) {
+        console.log(`search for competitors for: ${article.title}`);
+        const competitors = getResult(article.title);
+        console.log(`Found competitors ${competitors}`);
+    }
+};
