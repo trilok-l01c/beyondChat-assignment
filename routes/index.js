@@ -32,7 +32,6 @@ const connectAndSave = async () => {
                     new: true, // update document
                 }
             );
-            console.log(item.title);
         }
         // READ Logic: GET route
         app.get("/articles/", async (req, res) => {

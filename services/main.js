@@ -4,10 +4,9 @@ const { getResults } = require("./searchService");
 const { extractContent } = require("./otherScraper");
 
 const runDeepResearch = async () => {
+    console.time("Phase 2 executions");
     const article = await Articles.findOne({ processed: { $ne: true } });
     if (!article) return console.log("All are processed");
-
-    console.log("Searching for the better");
     const links = await getResults(article.title);
     const researchSamples = [];
 
@@ -20,8 +19,6 @@ const runDeepResearch = async () => {
                 content: text.substring(0, 8000),
             });
             if (researchSamples.length >= 2) break;
-        } else {
-            console.log("skip this site");
         }
     }
 
@@ -36,7 +33,7 @@ const runDeepResearch = async () => {
                 article.processed = true;
                 await article.save();
                 console.log("Success!!!");
-                console.log("Raw llm output: ", finalArticle);
+                console.log("Raw llm output: \n", finalArticle);
             } else {
                 console.log("LLM failure");
                 if (finalArticle)
@@ -48,6 +45,7 @@ const runDeepResearch = async () => {
     } else {
         console.log("No good samples found");
     }
+    console.timeEnd("Phase 2 executions");
 };
 
 module.exports = { runDeepResearch };

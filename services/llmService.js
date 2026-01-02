@@ -41,8 +41,11 @@ const rewriteArticles = async (baseArticle, researchSamples) => {
                         ### INPUT DATA
                         - **Original Content**: ${baseArticle}
                         - **Research Style Samples**: 
-                        ${researchText}
-
+                        ${competitor1.content}
+                        ${competitor2.content}
+                        - ** Reference URLs **:
+                        ${competitor1.source}
+                        ${competitor2.source}
                         ### FINAL RULE
                         Return ONLY the Markdown content. Do not say "Here is the rewritten article."
                         `,
