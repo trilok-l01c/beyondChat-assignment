@@ -1,9 +1,9 @@
 const Groq = require("groq-sdk");
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-const rewriteArticle = async (baseArticle, researchSamples) => {
+const rewriteArticles = async (baseArticle, researchSamples) => {
     try {
         // Prepare the research text to avoid confusing the LLM with JSON brackets
         const competitor1 = researchSamples[0]
@@ -28,23 +28,24 @@ const rewriteArticle = async (baseArticle, researchSamples) => {
                 {
                     role: "user",
                     content: `
-                    TASK: 
-                    1. Completely rewrite the 'ORIGINAL ARTICLE' provided below.
-                    2. Use the 'RESEARCH SAMPLES' to adopt a similar professional tone, use H2 and H3 headers, and improve the formatting.
-                    3. The final article MUST be at least 600 words long.
-                    4. At the very bottom, add a section called '## References' and list the URLs of the research samples.
+                        ### TASK
+                        Rewrite the 'Original Article' to be a high-quality, long-form blog post. 
 
-                    ORIGINAL ARTICLE TO REWRITE:
-                    ${baseArticle}
+                        ### STRUCTURE REQUIREMENTS
+                        1. **Title**: Create a catchy, SEO-friendly H1 title.
+                        2. **Key Takeaways**: Add a bulleted 'Key Takeaways' section immediately after the introduction.
+                        3. **Body**: Use H2 and H3 headers to break up content. Ensure a natural flow.
+                        4. **Conclusion**: Wrap up with a strong summary.
+                        5. **References**: List the sources below as clickable Markdown links.
 
-                    RESEARCH SAMPLES FOR STYLE & DEPTH:
-                    ---
-                    ${competitor1}
-                    ---
-                    ${competitor2}
-                    ---
+                        ### INPUT DATA
+                        - **Original Content**: ${baseArticle}
+                        - **Research Style Samples**: 
+                        ${researchText}
 
-                    Final Output Requirement: Return ONLY the rewritten article in Markdown format.`,
+                        ### FINAL RULE
+                        Return ONLY the Markdown content. Do not say "Here is the rewritten article."
+                        `,
                 },
             ],
             temperature: 0.7,
@@ -59,4 +60,4 @@ const rewriteArticle = async (baseArticle, researchSamples) => {
     }
 };
 
-module.exports = { rewriteArticle };
+module.exports = { rewriteArticles };

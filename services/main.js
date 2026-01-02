@@ -36,6 +36,7 @@ const runDeepResearch = async () => {
                 article.processed = true;
                 await article.save();
                 console.log("Success!!!");
+                console.log("Raw llm output: ", finalArticle);
             } else {
                 console.log("LLM failure");
                 if (finalArticle)
