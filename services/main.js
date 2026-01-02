@@ -5,33 +5,47 @@ const { extractContent } = require("./otherScraper");
 
 const runDeepResearch = async () => {
     const article = await Articles.findOne({ processed: { $ne: true } });
-    // if article not exist means already processed
     if (!article) return console.log("All are processed");
-    console.log("Searching for the better");
 
+    console.log("Searching for the better");
     const links = await getResults(article.title);
     const researchSamples = [];
+
     for (const link of links) {
         const text = await extractContent(link);
         if (text && text.length > 500) {
             console.log("push this site");
-            researchSamples.push({ url, content: text.substring(0, 8000) });
+            researchSamples.push({
+                url: link,
+                content: text.substring(0, 8000),
+            });
+            if (researchSamples.length >= 2) break;
         } else {
             console.log("skip this site");
         }
     }
+
     if (researchSamples.length > 0) {
-        // calling GPT
-        console.log("Trigger GPT-5-nano");
-        const finalArticle = rewriteArticles(article.content, researchSamples);
-        if (finalArticle) {
-            article.content = finalArticle;
-            article.processed = true;
-            await article.save();
-            console.log("Success!!!");
+        try {
+            const finalArticle = await rewriteArticles(
+                article.content,
+                researchSamples
+            );
+            if (finalArticle.length > 500) {
+                article.content = finalArticle;
+                article.processed = true;
+                await article.save();
+                console.log("Success!!!");
+            } else {
+                console.log("LLM failure");
+                if (finalArticle)
+                    console.log("actually returned: ", finalArticle, "...");
+            }
+        } catch (error) {
+            console.error("LLM failed:", error.message);
         }
     } else {
-        console.log("Increase number of sites");
+        console.log("No good samples found");
     }
 };
 

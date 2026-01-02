@@ -1,38 +1,62 @@
-const OpenAi = require("openai");
+const Groq = require("groq-sdk");
 require("dotenv").config();
-const client = OpenAi({ apiKey: process.env.OPENAI_API_KEY });
 
-// rewriting the articles
-const rewriteArticles = async (baseArticle, otherArticles) => {
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+const rewriteArticle = async (baseArticle, researchSamples) => {
     try {
-        const res = await client.chat.complet.create({
-            model: "gpt-5-nano",
-            input: [
+        // Prepare the research text to avoid confusing the LLM with JSON brackets
+        const competitor1 = researchSamples[0]
+            ? `SOURCE: ${
+                  researchSamples[0].url
+              }\nCONTENT: ${researchSamples[0].content.substring(0, 4000)}`
+            : "N/A";
+        const competitor2 = researchSamples[1]
+            ? `SOURCE: ${
+                  researchSamples[1].url
+              }\nCONTENT: ${researchSamples[1].content.substring(0, 4000)}`
+            : "N/A";
+
+        const completion = await groq.chat.completions.create({
+            model: "llama-3.3-70b-versatile",
+            messages: [
                 {
                     role: "system",
                     content:
-                        "You are a professional content architect: Rewrite the articles to match the tone, depth, structure and SEO formating of provided research articles",
+                        "You are a Senior SEO Content Editor. Your task is to rewrite a base article to match the high-quality professional tone, depth, and formatting of top-ranking competitors.",
                 },
                 {
                     role: "user",
-                    content: ` 
-                        Base article: ${baseArticle}
-                        research article1: ${otherArticles[0]}
-                        research article2: ${otherArticles[1]}
-                        Tasks:
-                        - rewrite the content of base article with matching the tone and structure formating of research articles
-                        - keep all original facts of base article
-                        - append references of research articles with url ${otherArticles[0].url} and ${otherArticles[1].url}.
-                        `,
+                    content: `
+                    TASK: 
+                    1. Completely rewrite the 'ORIGINAL ARTICLE' provided below.
+                    2. Use the 'RESEARCH SAMPLES' to adopt a similar professional tone, use H2 and H3 headers, and improve the formatting.
+                    3. The final article MUST be at least 600 words long.
+                    4. At the very bottom, add a section called '## References' and list the URLs of the research samples.
+
+                    ORIGINAL ARTICLE TO REWRITE:
+                    ${baseArticle}
+
+                    RESEARCH SAMPLES FOR STYLE & DEPTH:
+                    ---
+                    ${competitor1}
+                    ---
+                    ${competitor2}
+                    ---
+
+                    Final Output Requirement: Return ONLY the rewritten article in Markdown format.`,
                 },
             ],
-            response_format: { type: "text" },
+            temperature: 0.7,
+            max_tokens: 4096, // Ensure there is enough room for a full article
         });
-        return res.output.content;
+
+        const result = completion.choices[0]?.message?.content || "";
+        return result.trim();
     } catch (error) {
-        console.error("OpenAI error", error.messege);
+        console.error("Groq API Error:", error.message);
         return null;
     }
 };
 
-module.exports = { rewriteArticles };
+module.exports = { rewriteArticle };
