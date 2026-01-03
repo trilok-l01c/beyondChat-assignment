@@ -7,11 +7,13 @@ const Articles = require("../models/articles");
 const { scraping } = require("../services/baseScraper");
 const { getResults } = require("../services/searchService");
 const { runDeepResearch } = require("../services/main");
-
+// using cors
+const cors = require("cors");
 // taking mongo's connection string
 const MongoURI = process.env.MONGO_URI;
 // working with express
 const app = express();
+app.use(cors);
 // middleware
 app.use(express.json());
 const PORT = process.env.PORT;
