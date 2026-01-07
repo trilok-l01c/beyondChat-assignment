@@ -38,6 +38,19 @@ function List() {
     );
 }
 
+const RadioButton = () => {
+    return (
+        <>
+            <input id="box1" type="radio" name="radio" />
+            <label htmlFor="box1">Blue</label>
+            <input id="box2" type="radio" name="radio" />
+            <label htmlFor="box2">Red</label>
+            <input type="radio" name="radio" />
+            <label htmlFor="box3">Green</label>
+        </>
+    );
+};
+
 function App() {
     const [name, setName] = useState("Alice");
     const [count, setCount] = useState(0);
@@ -72,6 +85,7 @@ function App() {
                 Hit me to count!
             </button>
             <List />
+            <RadioButton />
         </>
     );
 }
