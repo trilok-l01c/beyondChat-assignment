@@ -21,3 +21,5 @@ Phase 1 asks for the scraping the 5 oldest blogs from [Beyondchat blogs](https:/
 ## Phase 2: Research and Rewriting the articles
 In this phase of project, we search for _two blogs_ related to the topic on which our each original blog is written, on google and rewrite the blog to using LLM. This was crucial and tough task.
 * To search for _two blogs_ we used [serpApi](https://www.serpapi.com)
+## Phase 3: Making UI with React
+Here, we are going to make a interactive UI with the help of react.
