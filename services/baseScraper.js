@@ -17,7 +17,7 @@ const scrapePages = async (url) => {
         const $ = cheerio.load(response.data);
         const $articles = $("article.entry-card");
         // scraping
-        $articles.each((idx, el) => {
+        $articles.each((_, el) => {
             // taking titles and links
             const obj = {};
             const $a = $(el).find("h2.entry-title a");
