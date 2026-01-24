@@ -1,6 +1,24 @@
 import { useState } from "react";
 
 export default function Tab({ activeTab }) {
+    // form data
+    const [formData, setFormData] = useState({
+        fullName: "",
+        email: "",
+        phone: "",
+        address: "",
+        jobTitle: "",
+        company: "",
+        yoe: "0-1",
+        skills: "",
+    });
+
+    // handle formData as the user types function
+    const handleDataInput = (e) => {
+        const [name, value] = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
     // --- returning ---
     return (
         <>
@@ -8,20 +26,33 @@ export default function Tab({ activeTab }) {
                 <div className="tabs-header">
                     <button
                         className={`tab-header ${activeTab === 0 ? "active" : ""}`}
-                    ></button>
+                    >
+                        Personal Details
+                    </button>
                     <button
                         className={`tab-header ${activeTab === 1 ? "active" : ""}`}
-                    ></button>
+                    >
+                        Experience
+                    </button>
                     <button
                         className={`tab-header ${activeTab === 2 ? "active" : ""}`}
-                    ></button>
+                    >
+                        Review & Submit
+                    </button>
                 </div>
                 {/* Personal info */}
                 {activeTab == 0 && (
                     <div className="personal-info">
                         <div className="input-sec">
-                            <label htmlFor="name"></label>
-                            <input type="text" id="name" name="name" required />
+                            <label htmlFor="fullName"></label>
+                            <input
+                                type="text"
+                                id="fullName"
+                                name="fullName"
+                                onChange={() => handleDataInput}
+                                value={formData.fullName}
+                                required
+                            />
                         </div>
                         <div className="input-sec">
                             <label htmlFor="email"></label>
@@ -29,12 +60,20 @@ export default function Tab({ activeTab }) {
                                 type="email"
                                 id="email"
                                 name="email"
+                                value={formData.email}
+                                onChange={() => handleDataInput}
                                 required
                             />
                         </div>
                         <div className="input-sec">
                             <label htmlFor="phone"></label>
-                            <input type="tel" id="phone" name="phone" />
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                onChange={() => handleDataInput}
+                                value={formData.phone}
+                            />
                         </div>
                         <div className="input-sec">
                             <label htmlFor="address"></label>
@@ -44,6 +83,8 @@ export default function Tab({ activeTab }) {
                                 id="address"
                                 name="address"
                                 required
+                                onChange={() => handleDataInput}
+                                value={formData.address}
                             />
                         </div>
                     </div>
@@ -53,15 +94,37 @@ export default function Tab({ activeTab }) {
                     <div className="experience">
                         <div className="input-sec">
                             <label htmlFor="job-title">Job</label>
-                            <input id="job-title" type="text" name="jobTitle" />
+                            <input
+                                id="job-title"
+                                type="text"
+                                name="jobTitle"
+                                value={formData.jobTitle}
+                                onChange={() => handleDataInput}
+                            />
                         </div>
                         <div className="input-sec">
                             <label htmlFor="company">Company</label>
-                            <input id="company" type="text" name="company" />
+                            <input
+                                id="company"
+                                type="text"
+                                name="company"
+                                value={formData.company}
+                                onChange={() => handleDataInput}
+                            />
                         </div>
                         <div className="input-sec">
                             <label htmlFor="yoe">Years of Experience</label>
-                            <select name="yoe" id="yoe"></select>
+                            <select
+                                name="yoe"
+                                id="yoe"
+                                value={formData.yoe}
+                                onChange={() => handleDataInput}
+                            >
+                                <option value="0-1">Less than 1 year</option>
+                                <option value="1-3">1-3 years</option>
+                                <option value="3-5">3-5 years</option>
+                                <option value="5+">More than 5 years</option>
+                            </select>
                         </div>
                         <div className="input-sec">
                             <label htmlFor="skills">Skills</label>
@@ -70,6 +133,8 @@ export default function Tab({ activeTab }) {
                                 id="skills"
                                 rows={3}
                                 placeholder="Eg. HTML/CSS, JS, React, Nextjs, Nodejs..."
+                                value={formData.skills}
+                                onChange={() => handleDataInput}
                             ></textarea>
                         </div>
                     </div>
@@ -77,9 +142,45 @@ export default function Tab({ activeTab }) {
                 {/* REVIEW */}
                 {activeTab == 2 && (
                     <div className="review">
-                        <div className="show-info"></div>
-                        <div className="show-info"></div>
-                        <div className="show-info"></div>
+                        <div className="review-info">
+                            <h4>Personal Details</h4>
+                            <p>
+                                <strong>Full Name: </strong>
+                                {formData.fullName}
+                            </p>
+                            <p>
+                                <strong>Email: </strong>
+                                {formData.email}
+                            </p>
+                            <p>
+                                <strong>Phone: </strong>
+                                {formData.phone}
+                            </p>
+                            <p>
+                                <strong>Address: </strong>
+                                {formData.address}
+                            </p>
+                        </div>
+                        <div className="review-info">
+                            <h4>Experience</h4>
+                            <p>
+                                <strong>Job Title: </strong>
+                                {formData.jobTitle}
+                            </p>
+                            <p>
+                                <strong>Company: </strong>
+                                {formData.company}
+                            </p>
+                            <p>
+                                <strong>Years of Experience: </strong>
+                                {formData.yoe}
+                            </p>
+                            <p>
+                                <strong>Skills: </strong>
+                                {formData.skills}
+                            </p>
+                        </div>
+                        <div className="review-info"></div>
                     </div>
                 )}
             </div>
