@@ -1,12 +1,25 @@
 body {
-    background-color: #877171;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    background-color: #000000;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .container {
-    width: 60%;
+    width: 60vw;
+    height: 80vh;
+    background-color: #efefef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container > div {
+    width: 80%;
     height: 80%;
-    background-color: #fff;
+    background-color: #ffffff;
+    margin: auto;
 }

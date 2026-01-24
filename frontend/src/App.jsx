@@ -4,10 +4,11 @@ import "./PostCard";
 import Tab from "./Tab";
 function App() {
     // here we will have our articles array
-    const [activeTab, SetActiveTab] = useState(0);
+    const [activeTab, SetActiveTab] = useState(1);
     return (
         <>
             <div className="container">
+                <h2>Job application form</h2>
                 <Tab activeTab={activeTab} />
             </div>
         </>
