@@ -16,7 +16,7 @@ export default function Tab({ activeTab }) {
     // handle formData as the user types function
     const handleDataInput = (e) => {
         const [name, value] = e.target;
-        setFormData({ ...formData, [name]: value });
+        setFormData({ [name]: value, ...formData });
     };
 
     // --- returning ---
@@ -44,46 +44,46 @@ export default function Tab({ activeTab }) {
                 {activeTab == 0 && (
                     <div className="personal-info">
                         <div className="input-sec">
-                            <label htmlFor="fullName"></label>
+                            <label htmlFor="fullName">Full Name:</label>
                             <input
                                 type="text"
                                 id="fullName"
                                 name="fullName"
-                                onChange={() => handleDataInput}
+                                onChange={handleDataInput}
                                 value={formData.fullName}
                                 required
                             />
                         </div>
                         <div className="input-sec">
-                            <label htmlFor="email"></label>
+                            <label htmlFor="email">Email:</label>
                             <input
                                 type="email"
                                 id="email"
                                 name="email"
                                 value={formData.email}
-                                onChange={() => handleDataInput}
+                                onChange={handleDataInput}
                                 required
                             />
                         </div>
                         <div className="input-sec">
-                            <label htmlFor="phone"></label>
+                            <label htmlFor="phone">Phone:</label>
                             <input
                                 type="tel"
                                 id="phone"
                                 name="phone"
-                                onChange={() => handleDataInput}
+                                onChange={handleDataInput}
                                 value={formData.phone}
                             />
                         </div>
                         <div className="input-sec">
-                            <label htmlFor="address"></label>
+                            <label htmlFor="address">Address:</label>
                             <textarea
                                 rows="3"
                                 placeholder="33, wall street, New York"
                                 id="address"
                                 name="address"
                                 required
-                                onChange={() => handleDataInput}
+                                onChange={handleDataInput}
                                 value={formData.address}
                             />
                         </div>
@@ -99,7 +99,7 @@ export default function Tab({ activeTab }) {
                                 type="text"
                                 name="jobTitle"
                                 value={formData.jobTitle}
-                                onChange={() => handleDataInput}
+                                onChange={handleDataInput}
                             />
                         </div>
                         <div className="input-sec">
@@ -109,7 +109,7 @@ export default function Tab({ activeTab }) {
                                 type="text"
                                 name="company"
                                 value={formData.company}
-                                onChange={() => handleDataInput}
+                                onChange={handleDataInput}
                             />
                         </div>
                         <div className="input-sec">
@@ -118,7 +118,7 @@ export default function Tab({ activeTab }) {
                                 name="yoe"
                                 id="yoe"
                                 value={formData.yoe}
-                                onChange={() => handleDataInput}
+                                onChange={handleDataInput}
                             >
                                 <option value="0-1">Less than 1 year</option>
                                 <option value="1-3">1-3 years</option>
@@ -134,7 +134,7 @@ export default function Tab({ activeTab }) {
                                 rows={3}
                                 placeholder="Eg. HTML/CSS, JS, React, Nextjs, Nodejs..."
                                 value={formData.skills}
-                                onChange={() => handleDataInput}
+                                onChange={handleDataInput}
                             ></textarea>
                         </div>
                     </div>
