@@ -1,14 +1,27 @@
-import { useState, useEffect, useRef, useId } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import "./App.css";
 import "./PostCard";
 import Tab from "./Tab";
+import TabContext from "./TabContext";
 function App() {
     // here we will have our articles array
-    const [activeTab, SetActiveTab] = useState(0);
+    const TabCntxt = useContext(TabContext);
+    const [activeTab, SetActiveTab] = useState(2);
+    const totalTabs = 3;
+    userContext.createContext({ activeTab, SetActiveTab });
+    const handleNext = () => {
+        SetActiveTab((prev) => Math.min(prev + 1, totalTabs - 1));
+    };
+
+    const handlePrev = () => {
+        SetActiveTab((prev) => Math.max(prev - 1, 0));
+    };
     return (
         <>
             <h2>Job application form</h2>
-            <Tab activeTab={activeTab} />
+            <TabContext.Provider value={{ activeTab, SetActiveTab, totalTabs }}>
+                <Tab onNext={handleNext} onPrev={handlePrev} />
+            </TabContext.Provider>
         </>
     );
 }

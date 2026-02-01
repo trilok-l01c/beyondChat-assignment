@@ -1,22 +1,23 @@
 import { useState } from "react";
 
-export default function Tab({ activeTab }) {
-    // form data
-    const [formData, setFormData] = useState({
-        fullName: "",
-        email: "",
-        phone: "",
-        address: "",
-        jobTitle: "",
-        company: "",
-        yoe: "0-1",
-        skills: "",
-    });
+const initialData = {
+    fullName: "",
+    email: "",
+    phone: "",
+    address: "",
+    jobTitle: "",
+    company: "",
+    yoe: "0-1",
+    skills: "",
+};
 
+export default function Tab({ activeTab, onNext, onPrev }) {
+    // form data
+    const [formData, setFormData] = useState(initialData);
     // handle formData as the user types function
     const handleDataInput = (e) => {
-        const [name, value] = e.target;
-        setFormData({ [name]: value, ...formData });
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
     // --- returning ---
