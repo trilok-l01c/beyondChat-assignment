@@ -1,5 +1,5 @@
-import { useState } from "react";
-
+import { useContext, useState } from "react";
+// import TabContext from "TabContext.js";
 const initialData = {
     fullName: "",
     email: "",
@@ -10,8 +10,8 @@ const initialData = {
     yoe: "0-1",
     skills: "",
 };
-
-export default function Tab({ activeTab, onNext, onPrev }) {
+// const TabCnt = useContext(TabContext);
+export default function Tab({ onNext, onPrev, activeTab, SetActiveTab }) {
     // form data
     const [formData, setFormData] = useState(initialData);
     // handle formData as the user types function
@@ -26,16 +26,25 @@ export default function Tab({ activeTab, onNext, onPrev }) {
             <div className="tabs-container">
                 <div className="tabs-header">
                     <button
+                        onClick={() => {
+                            SetActiveTab(0);
+                        }}
                         className={`tab-header ${activeTab === 0 ? "active" : ""}`}
                     >
                         Personal Details
                     </button>
                     <button
+                        onClick={() => {
+                            SetActiveTab(1);
+                        }}
                         className={`tab-header ${activeTab === 1 ? "active" : ""}`}
                     >
                         Experience
                     </button>
                     <button
+                        onClick={() => {
+                            SetActiveTab(2);
+                        }}
                         className={`tab-header ${activeTab === 2 ? "active" : ""}`}
                     >
                         Review & Submit
@@ -184,6 +193,8 @@ export default function Tab({ activeTab, onNext, onPrev }) {
                         <div className="review-info"></div>
                     </div>
                 )}
+                <button onClick={onPrev}>Prev</button>
+                <button onClick={onNext}>Next</button>
             </div>
         </>
     );

@@ -2,13 +2,11 @@ import { useState, useEffect, useRef, useContext } from "react";
 import "./App.css";
 import "./PostCard";
 import Tab from "./Tab";
-import TabContext from "./TabContext";
+// import TabContext from "./TabContext.js";
 function App() {
     // here we will have our articles array
-    const TabCntxt = useContext(TabContext);
-    const [activeTab, SetActiveTab] = useState(2);
+    const [activeTab, SetActiveTab] = useState(0);
     const totalTabs = 3;
-    userContext.createContext({ activeTab, SetActiveTab });
     const handleNext = () => {
         SetActiveTab((prev) => Math.min(prev + 1, totalTabs - 1));
     };
@@ -19,9 +17,14 @@ function App() {
     return (
         <>
             <h2>Job application form</h2>
-            <TabContext.Provider value={{ activeTab, SetActiveTab, totalTabs }}>
-                <Tab onNext={handleNext} onPrev={handlePrev} />
-            </TabContext.Provider>
+            {/* <TabContext.Provider value={{ activeTab, SetActiveTab, totalTabs }}> */}
+            <Tab
+                onNext={handleNext}
+                onPrev={handlePrev}
+                activeTab={activeTab}
+                SetActiveTab={SetActiveTab}
+            />
+            {/* </TabContext.Provider> */}
         </>
     );
 }

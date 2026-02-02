@@ -16,6 +16,12 @@ h2 {
     font-size: 30px;
 }
 
+h4 {
+    text-align: center;
+    font-size: 25px;
+    margin-top: 12px;
+}
+
 .tabs-container {
     background-color: rgb(250, 250, 250);
     margin: 0 auto;
