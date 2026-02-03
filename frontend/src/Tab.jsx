@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-// import TabContext from "TabContext.js";
+import { TabContext } from "./TabContext";
 const initialData = {
     fullName: "",
     email: "",
@@ -10,10 +10,11 @@ const initialData = {
     yoe: "0-1",
     skills: "",
 };
-// const TabCnt = useContext(TabContext);
-export default function Tab({ onNext, onPrev, activeTab, SetActiveTab }) {
+export default function Tab({ onNext, onPrev }) {
     // form data
     const [formData, setFormData] = useState(initialData);
+    // Tab context
+    const TabCnt = useContext(TabContext);
     // handle formData as the user types function
     const handleDataInput = (e) => {
         const { name, value } = e.target;
@@ -27,31 +28,31 @@ export default function Tab({ onNext, onPrev, activeTab, SetActiveTab }) {
                 <div className="tabs-header">
                     <button
                         onClick={() => {
-                            SetActiveTab(0);
+                            TabCnt.SetActiveTab(0);
                         }}
-                        className={`tab-header ${activeTab === 0 ? "active" : ""}`}
+                        className={`tab-header ${TabCnt.activeTab === 0 ? "active" : ""}`}
                     >
                         Personal Details
                     </button>
                     <button
                         onClick={() => {
-                            SetActiveTab(1);
+                            TabCnt.SetActiveTab(1);
                         }}
-                        className={`tab-header ${activeTab === 1 ? "active" : ""}`}
+                        className={`tab-header ${TabCnt.activeTab === 1 ? "active" : ""}`}
                     >
                         Experience
                     </button>
                     <button
                         onClick={() => {
-                            SetActiveTab(2);
+                            TabCnt.SetActiveTab(2);
                         }}
-                        className={`tab-header ${activeTab === 2 ? "active" : ""}`}
+                        className={`tab-header ${TabCnt.activeTab === 2 ? "active" : ""}`}
                     >
                         Review & Submit
                     </button>
                 </div>
                 {/* Personal info */}
-                {activeTab == 0 && (
+                {TabCnt.activeTab == 0 && (
                     <div className="personal-info">
                         <div className="input-sec">
                             <label htmlFor="fullName">Full Name:</label>
@@ -100,7 +101,7 @@ export default function Tab({ onNext, onPrev, activeTab, SetActiveTab }) {
                     </div>
                 )}
                 {/* Experience */}
-                {activeTab == 1 && (
+                {TabCnt.activeTab == 1 && (
                     <div className="experience">
                         <div className="input-sec">
                             <label htmlFor="job-title">Job</label>
@@ -150,7 +151,7 @@ export default function Tab({ onNext, onPrev, activeTab, SetActiveTab }) {
                     </div>
                 )}
                 {/* REVIEW */}
-                {activeTab == 2 && (
+                {TabCnt.activeTab == 2 && (
                     <div className="review">
                         <div className="review-info">
                             <h4>Personal Details</h4>

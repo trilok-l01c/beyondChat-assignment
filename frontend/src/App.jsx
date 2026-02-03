@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useContext } from "react";
 import "./App.css";
 import "./PostCard";
 import Tab from "./Tab";
-// import TabContext from "./TabContext.js";
+import { TabContext } from "./TabContext";
 function App() {
     // here we will have our articles array
     const [activeTab, SetActiveTab] = useState(0);
@@ -17,14 +17,14 @@ function App() {
     return (
         <>
             <h2>Job application form</h2>
-            {/* <TabContext.Provider value={{ activeTab, SetActiveTab, totalTabs }}> */}
-            <Tab
-                onNext={handleNext}
-                onPrev={handlePrev}
-                activeTab={activeTab}
-                SetActiveTab={SetActiveTab}
-            />
-            {/* </TabContext.Provider> */}
+            <TabContext.Provider value={{ activeTab, SetActiveTab, totalTabs }}>
+                <Tab
+                    onNext={handleNext}
+                    onPrev={handlePrev}
+                    activeTab={activeTab}
+                    SetActiveTab={SetActiveTab}
+                />
+            </TabContext.Provider>
         </>
     );
 }
