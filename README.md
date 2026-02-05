@@ -28,6 +28,5 @@ In this phase of project, we search for _two blogs_ related to the topic on whic
 Here, we are going to make a interactive UI with the help of react.
 ### TO DO
 - [x] Make parent container that contains all our blog posts.
-- [ ] Make
-- [ ] joij
+- [ ] 
 - [ ] 
