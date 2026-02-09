@@ -1,0 +1,6 @@
+{
+    "github.copilot.enable": {
+        "bash": true,
+        "*": false
+    }
+}
