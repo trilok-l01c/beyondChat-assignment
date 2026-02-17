@@ -22,6 +22,7 @@ export default function Tab({ onNext, onPrev }) {
     };
 
     // --- returning ---
+    console.log(sum(4, 5));
     return (
         <>
             <div className="tabs-container">
