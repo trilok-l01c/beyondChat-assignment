@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 // ################# learn how to retrieve content from the backend ###########################
+// - We need the data from our api we made with the help of express
 const [blogsData, setData] = useState([
     {
         title: "dummy blog1",
