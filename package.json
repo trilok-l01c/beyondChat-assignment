@@ -20,6 +20,7 @@
     "groq-sdk": "^0.37.0",
     "jsdom": "^27.4.0",
     "mongoose": "^9.1.0",
-    "openai": "^6.15.0"
+    "openai": "^6.15.0",
+    "react-markdown": "^10.1.0"
   }
 }

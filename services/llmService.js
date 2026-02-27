@@ -39,7 +39,7 @@ const rewriteArticles = async (baseArticle, researchSamples) => {
                         5. **References**: List the sources below as clickable Markdown links.
 
                         ### INPUT DATA
-                        - **Original Content**: ${baseArticle}
+                        - **Original Article**: ${baseArticle}
                         - **Research Style Samples**: 
                             1. ${competitor1.content}
                             2. ${competitor2.content}
