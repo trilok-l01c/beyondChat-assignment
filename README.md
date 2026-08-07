@@ -27,6 +27,6 @@ In this phase of project, we search for _two blogs_ related to the topic on whic
 ## Phase 3: Making UI with React
 Here, we are going to make a interactive UI with the help of react.
 ### TO DO
-- [x] Make parent container that contains all our blog posts.
-- [x] 
-- [ ] 
+- [ ] Make parent container that contains all our blog posts.
+- [ ] Add small card for each block
+- [ ] Make a center peek to read blog.
