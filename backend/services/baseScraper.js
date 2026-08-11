@@ -7,9 +7,12 @@ const DBFile = require("../models/articles"); // importing the DB file
 let pages = [
     "https://beyondchats.com/blogs/page/15/",
     "https://beyondchats.com/blogs/page/14/",
+    "https://beyondChats.com/blogs/page/13/",
 ];
+
 const articles = [];
 // get the data from the beyondChat's blog page
+
 const scrapePages = async (url) => {
     // calling load on cheerio
     try {
@@ -38,8 +41,7 @@ const scraping = async () => {
     for (const page of pages) {
         await scrapePages(page);
     }
-    // as per requirement only taking 5 articles
-    const lastFiveArticles = articles.slice(0, 5);
+    const lastFiveArticles = articles.slice(0, 10);
     return lastFiveArticles;
 };
 
