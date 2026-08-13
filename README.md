@@ -1,5 +1,10 @@
-# Beyondchats internship application assignment
-A assignment project for internship application in *[Beyondchats](https://beyondchats.com/)* by **Trilok Lowanshi**.  
+# AI Blog Content Optimizer
+A site for optimizing content of blog sites with the help of AI. That will...<br>
+- Remove all the grammatical or syntactical mistakes.
+- Fix typos.
+- Add more content.
+- Add SEO friendly keywords.
+- Add links to references.
 Here, below is an elaborated discussion about the workflow, tools and difficulties faced.
 ## Phase 1: Scraping, storing and delivering
 Phase 1 asks for the scraping the 5 oldest blogs from [Beyondchat blogs](https://beyondchats.com/blogs) and saving their information to remote DB ([MongoDB atlas](https://www.mongodb.com/))
